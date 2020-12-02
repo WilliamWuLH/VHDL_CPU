@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<LOG_ROOT>
+	<PROJECT NAME="CPU">
+		<CBX_INST_ENTRY INSTANCE_NAME="|CPU|LPM_RAM_IO:inst14|altram:sram|altsyncram:ram_block" CBX_FILE_NAME="altsyncram_9891.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|CPU|Program_Counter:inst5|lpm_add_sub:Add0" CBX_FILE_NAME="add_sub_8rh.tdf"/>
+	</PROJECT>
+</LOG_ROOT>

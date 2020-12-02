@@ -1,0 +1,91 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_arith.all;
+use ieee.std_logic_unsigned.all;
+
+entity InstructionDecoder is
+port(
+EN : in std_logic;
+IR : in std_logic_vector(7 downto 0);
+IRO : out std_logic_vector(7 downto 0);
+MOVA : out std_logic;
+MOVB : out std_logic;
+MOVC : out std_logic;
+ADD : out std_logic;
+SUB : out std_logic;
+OR0 : out std_logic;
+NOT0 : out std_logic;
+RSR : out std_logic;
+RSL : out std_logic;
+JMP : out std_logic;
+JZ : out std_logic;
+JC : out std_logic;
+IN0 : out std_logic;
+OUT0 : out std_logic;
+NOP : out std_logic;
+HALT : out std_logic);
+end InstructionDecoder ;
+architecture RTL of InstructionDecoder is
+begin
+	process(EN,IR)
+	begin
+	MOVA <= '0';
+	MOVB <= '0';
+	MOVC <= '0';
+	ADD <= '0';
+	SUB <= '0';
+	OR0 <= '0';
+	NOT0 <= '0';
+	RSR <= '0';
+	RSL <= '0';
+	JMP <= '0';
+	JZ <= '0';
+	JC <= '0';
+	IN0 <= '0';
+	OUT0 <= '0';
+	NOP <= '0';
+	HALT <= '0';
+	IRO <= IR;
+	if(EN = '1') then
+			if(IR(7 downto 4) = "1111") then
+				if(IR(3 downto 2) = "11") then
+					MOVB <= '1';
+				elsif (IR(1 downto 0) = "11") then
+					MOVC <= '1';
+				else
+					MOVA <= '1';
+				end if;
+			elsif(IR(7 downto 4) = "1001") then
+				ADD <= '1';
+			elsif(IR(7 downto 4) = "0110") then
+				SUB <= '1';
+			elsif(IR(7 downto 4) = "1011") then
+				OR0 <= '1';
+			elsif(IR(7 downto 4) = "0101") then
+				NOT0 <= '1';
+			elsif(IR(7 downto 4) = "1010") then
+				if(IR(1 downto 0) = "00")then
+					RSR <= '1';
+				elsif(IR(1 downto 0) = "11")then
+					RSL <= '1';
+				end if;
+			elsif(IR(7 downto 2) = "000100")then
+				if(IR(1 downto 0) = "00") then
+					JMP <= '1';
+				elsif(IR(1 downto 0) = "01") then
+					JZ <= '1';
+				elsif(IR(1 downto 0) = "10") then
+					JC <= '1';
+				end if;
+			elsif(IR(7 downto 4) = "0010") then
+				IN0 <= '1';
+			elsif(IR(7 downto 4) = "0100") then
+				OUT0 <= '1';
+			elsif(IR(7 downto 4) = "0111") then
+				NOP <= '1';
+			elsif(IR(7 downto 4) = "1000") then
+				HALT <= '1';
+			end if;
+		end if;
+	end process;
+end RTL ;

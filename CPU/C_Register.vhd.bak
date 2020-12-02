@@ -1,0 +1,20 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity  C_Register is
+port(
+	a : in std_logic;
+	clk : in std_logic;
+	C : out std_logic);
+end C_Register;
+
+architecture str of C_Register is
+	component trigger is
+	port(
+		D, EN, C : in std_logic;
+		Q : out std_logic);
+	end component;
+	begin
+		FA1	: trigger
+		port map (a, '1', clk, C);
+end str;
